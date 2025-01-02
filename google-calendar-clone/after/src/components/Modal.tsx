@@ -8,6 +8,15 @@ export type ModalProps = {
   onClose: () => void
 }
 
+let index = 0;
+
+declare global{
+  interface Window {
+    [key: `div${number}`]: HTMLDivElement
+  }
+}
+
+
 export function Modal({ children, isOpen, onClose }: ModalProps) {
   const [isClosing, setIsClosing] = useState(false)
   const prevIsOpen = useRef<boolean>()
@@ -32,10 +41,22 @@ export function Modal({ children, isOpen, onClose }: ModalProps) {
     prevIsOpen.current = isOpen
   }, [isOpen])
 
+
+  const divRef = useRef<HTMLDivElement>(null);
+  useEffect(()=>{
+    
+    setTimeout(()=>{
+      console.log('ref: ',divRef.current, isOpen, isClosing, index)
+      window[('div'+index++) as 'div1' | 'div2'] = divRef.current!;
+    },0)
+    
+  },[isOpen,isClosing])
+
   if (!isOpen && !isClosing) return null
 
   return createPortal(
     <div
+      ref={divRef}
       onAnimationEnd={() => setIsClosing(false)}
       className={cc("modal", isClosing && "closing")}
     >

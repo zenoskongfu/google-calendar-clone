@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .modal{
+            background-color: aquamarine;
+            border: 1px solid gray;
+            height: 200px;
+            width: 200px;
+            scale: 0;
+            animation: open 250ms forwards;
+        }
+
+        .modal.close{
+            animation: open 250ms reverse forwards;
+        }
+
+        @keyframes open {
+            0%{
+                scale: 0;
+
+            }
+            100%{
+                scale: 1;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <button id="close-button">close</button>
+    <div class="modal open" id="id-modal"></div>
+    <script>
+       
+
+        const close = ()=>{
+            console.log('close');
+            const modal = document.getElementById('id-modal');
+            modal.classList.add('close')
+        }
+
+        const buttonClose = document.getElementById('close-button');
+         buttonClose.addEventListener('click', close);
+    </script>
+</body>
+</html>
